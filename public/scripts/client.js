@@ -3,13 +3,15 @@ $(function(){
   console.log('Doc is ready!');
 
   getTasks();
+  $('#task-list').hide();
+  $('#taskAdding').hide();
 
   $('#taskAdding').on('click', '#task-submit', addTask);
   $('#task-list').on('click', '.remove', removeTask);
   $('#task-list').on('click', '.save', updateTask);
   $('#task-list').on('click', '.checkbox', toggleTaskStatus);
-
-
+  $('#addTaskButton').click(formToggle);
+  $('#taskList').click(taskListToggle);
 });
 
 function getTasks() {
@@ -22,6 +24,7 @@ function getTasks() {
 
 function displayTasks(tasks) {
   console.log('Got tasks from the server', tasks);
+  $('#taskAdding').hide();
 
   $('#task-list').empty();
 
@@ -29,7 +32,7 @@ function displayTasks(tasks) {
       var $li = $('<li></li>');
       var $form = $('<form></form>');
       $form.append('<label for="task">Task:</label>');
-      $form.append('<input type="text" name="task" value="'+task.task+'"/>');
+      $form.append('<input type="text" name="task" class="form-control" value="'+task.task+'"/>');
       $form.append('<label for="created_on">Created On:</label>');
       var $createdOn = new Date(task.created_on).toISOString().slice(0,10);
       $form.append('<input type="date" name="created_on" value="'+$createdOn+'"/>');
@@ -39,13 +42,15 @@ function displayTasks(tasks) {
         var $checkbox = $('<button class="checkbox" name="completed">Complete!</button>');
         $checkbox.data('id', task.id);
         $form.append($checkbox);
+
+
       }else{
         var $compeletedOn = new Date(task.completed_on).toISOString().slice(0,10);
         $form.append('<input type="text" class="completed_on" name="completed_on" value="' +$compeletedOn+'"/>');
         var $checkbox = $('<button class="checkbox" name="completed">Completed!</button>');
         $checkbox.data('id', task.id);
         $form.append($checkbox);
-        $form.addClass('completed')
+        $form.addClass('completed');
       }
       var $button = $('<button class="save">Save!</button>');
       $button.data('id', task.id);
@@ -60,6 +65,7 @@ function displayTasks(tasks) {
       $('#task-list').append($li);
     }
   });
+  $('#addTaskButton').text('+');
 }
 
 function addTask(event) { //adds task to database and redisplays page
@@ -107,7 +113,7 @@ function toggleTaskStatus(event){  //this function checks if task is complete or
     $(this).text('Completed!');
     $(this).closest('form').addClass('completed');
     var $compeletedOn = new Date().toISOString().slice(0,10);
-    console.log($(this).closest('form').find('.completed_on'));
+    //this section auto completes the completed on date at the time of button click
     $(this).closest('form').find('.completed_on').val($compeletedOn);
     var $form = $(this).closest('form');
 
@@ -132,5 +138,27 @@ function toggleTaskStatus(event){  //this function checks if task is complete or
       data: formData,
       success: getTasks
     });
+  }
+}
+
+function formToggle(event){
+  event.preventDefault();
+  if($(this).text()=='+'){
+    $('#taskAdding').show('slow');
+    $(this).text('-');
+  }else{
+    $(this).text('+');
+    $('#taskAdding').hide('slow');
+  }
+}
+
+function taskListToggle(event){
+  event.preventDefault();
+  if($(this).hasClass('hidden1')){
+    $('#task-list').show('slow');
+    $(this).removeClass('hidden1');
+  }else{
+    $('#task-list').hide('slow');
+    $(this).addClass('hidden1');
   }
 }

@@ -66,7 +66,7 @@ router.put('/:id', function(req, res){
         done();
       }else{
         var completed_on = req.body.completed_on;
-        if(completed_on == 'Not Yet Completed'){
+        if(completed_on == 'Not Yet Completed'||completed_on == ''){
           completed_on = null;
         }
         client.query('UPDATE tasks SET task=$2, created_on=$3, completed_on=$4 WHERE id=$1 RETURNING *',

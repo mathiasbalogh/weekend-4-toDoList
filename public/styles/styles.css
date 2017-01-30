@@ -1,3 +1,59 @@
+#addTaskButton {
+  background-color: inherit;
+  border: none;
+  /*float: right;*/
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+}
+h1 {
+  display: inline-block;
+}
+#taskList {
+  background-color: black;
+  border: none;
+  float:right;
+  color: white;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+}
+label {
+  margin: 0 20px 0 20px;
+}
+.checkbox {
+  display: inline-block;
+}
+#taskAdding {
+  background-color: rgb(0, 181, 148);
+  border-radius: 40px;
+  padding: 20px 0 20px 0;
+}
+#task-submit {
+  background-color: rgb(0, 181, 148);
+  border-radius: 80px;
+  border: 5px double;
+  border-color: black;
+  color: black;
+}
+.checkbox, .save, .remove {
+  margin: 0 10px 0 10px;
+  border-radius: 40px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+#task-list li {
+  list-style: none;
+  padding: 20px 10px 20px 10px;
+  background-color: rgb(0, 181, 148);
+  border-radius: 40px;
+
+}
+#task-list form {
+  border: 5px double;
+  padding: 10px 0;
+  border-radius: 40px;
+}
 .completed {
-  background-color: rgb(33, 173, 25);
+  background-color: black;
+  color: rgb(0, 181, 148);
 }
